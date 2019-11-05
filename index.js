@@ -15,11 +15,9 @@ import {
   PermissionsAndroid,
 } from 'react-native';
 
-import Permissions from 'react-native-permissions';
+import { request, PERMISSIONS } from 'react-native-permissions';
 import { RNCamera as Camera } from 'react-native-camera';
 
-const PERMISSION_AUTHORIZED = 'authorized';
-const CAMERA_PERMISSION = 'camera';
 const CAMERA_FLASH_MODE = Camera.Constants.FlashMode;
 const CAMERA_FLASH_MODES = [
   CAMERA_FLASH_MODE.torch, CAMERA_FLASH_MODE.on, CAMERA_FLASH_MODE.off,
@@ -120,9 +118,9 @@ export default class QRCodeScanner extends Component {
 
   componentDidMount() {
     if (Platform.OS === 'ios') {
-      Permissions.request(CAMERA_PERMISSION).then(response => {
+      request(PERMISSIONS.IOS.CAMERA).then(response => {
         this.setState({
-          isAuthorized: response === PERMISSION_AUTHORIZED,
+          isAuthorized: response === PERMISSIONS.RESULTS.GRANTED,
           isAuthorizationChecked: true,
         });
       });
